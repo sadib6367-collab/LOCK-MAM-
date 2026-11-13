@@ -4,8 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium VIP Guides & Tricks</title>
-  <!-- CSS ফাইল লিংক -->
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { background-color: #0f172a; color: #fff; }
+    header { background: #1e293b; padding: 20px; text-align: center; border-bottom: 2px solid #38bdf8; }
+    header h1 { color: #38bdf8; font-size: 24px; }
+    .container { max-width: 800px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card { background: #1e293b; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: 0.3s; }
+    .card:hover { transform: translateY(-5px); }
+    .card .icon { font-size: 50px; margin-bottom: 10px; }
+    .card h3 { margin-bottom: 10px; font-size: 18px; }
+    .card p { font-size: 14px; color: #94a3b8; margin-bottom: 15px; }
+    .btn { background: #38bdf8; color: #000; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.2s; }
+    .btn:hover { background: #0ea5e9; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
+    .modal-content { background: #1e293b; padding: 30px 20px; border-radius: 15px; text-align: center; width: 90%; max-width: 400px; position: relative; border: 1px solid #38bdf8; }
+    .modal-content h2 { margin-bottom: 10px; color: #38bdf8; font-size: 22px; }
+    .modal-content p { font-size: 15px; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5; }
+    .timer-circle { width: 80px; height: 80px; border-radius: 50%; border: 4px solid #f59e0b; display: flex; justify-content: center; align-items: center; font-size: 28px; font-weight: bold; color: #f59e0b; margin: 0 auto 20px auto; }
+    .step-btn { background: #f59e0b; color: #000; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 10px; display: none; }
+    .step-btn:hover { background: #d97706; }
+    .download-btn { background: #10b981; color: #fff; display: none; }
+    .download-btn:hover { background: #059669; }
+    .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; color: #94a3b8; cursor: pointer; background: none; border: none; }
+  </style>
 </head>
 <body>
 
@@ -14,33 +36,28 @@
   </header>
 
   <div class="container">
-    <!-- কার্ড ১ -->
     <div class="card">
       <div class="icon">🎬</div>
       <h3>CapCut Pro Unlocked</h3>
       <p>Get premium features for free.</p>
-      <!-- এখানে লিংক বসান: openModal('স্মার্ট লিংক', 'আসল ডাউনলোড লিংক') -->
-      <button class="btn" onclick="openModal('https://www.adnexa.cc/?go=wSb3jGZKVt1YBA9KGTQQ', 'https://your-download-link.com/capcut')">Download Now</button>
+      <button class="btn" onclick="openModal('https://www.adnexa.cc/?go=wSb3jGZKVt1YBA9KGTQQ', 'https://yoursite.com/capcut-download')">Download Now</button>
     </div>
 
-    <!-- কার্ড ২ -->
     <div class="card">
       <div class="icon">🎮</div>
       <h3>Free Fire Diamond Hack</h3>
       <p>Safe and working trick 2026.</p>
-      <button class="btn" onclick="openModal('https://www.adnexa.cc/?go=dIjabwHoXDVxwszb1HnT', 'https://your-download-link.com/ff')">Download Now</button>
+      <button class="btn" onclick="openModal('https://www.adnexa.cc/?go=dIjabwHoXDVxwszb1HnT', 'https://yoursite.com/ff-trick')">Download Now</button>
     </div>
 
-    <!-- কার্ড ৩ -->
     <div class="card">
       <div class="icon">📱</div>
       <h3>Mod Apps Collection</h3>
       <p>All modded apps in one place.</p>
-      <button class="btn" onclick="openModal('https://www.adnexa.cc/?go=MdC99rhwgD0nLFCh8VAt', 'https://your-download-link.com/apps')">Download Now</button>
+      <button class="btn" onclick="openModal('https://www.adnexa.cc/?go=MdC99rhwgD0nLFCh8VAt', 'https://yoursite.com/mods')">Download Now</button>
     </div>
   </div>
 
-  <!-- পপ-আপ (Modal) সেকশন -->
   <div class="modal-overlay" id="popupModal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">×</button>
@@ -55,7 +72,54 @@
     </div>
   </div>
 
-  <!-- JavaScript ফাইল লিংক -->
-  <script src="script.js"></script>
+  <script>
+    let smartLinkURL = "";
+    let actualDownloadURL = "";
+    let timerInterval;
+
+    function openModal(smartUrl, downloadUrl) {
+      smartLinkURL = smartUrl;
+      actualDownloadURL = downloadUrl;
+      
+      document.getElementById('popupModal').style.display = 'flex';
+      
+      document.getElementById('timerDisplay').innerText = "15";
+      document.getElementById('timerDisplay').style.borderColor = "#f59e0b";
+      document.getElementById('verifyBtn').style.display = 'block';
+      document.getElementById('finalDownloadBtn').style.display = 'none';
+      
+      clearInterval(timerInterval);
+    }
+
+    function startVerification() {
+      window.open(smartLinkURL, '_blank');
+      document.getElementById('verifyBtn').style.display = 'none';
+      
+      let timeLeft = 15;
+      let timerElement = document.getElementById('timerDisplay');
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElement.innerText = timeLeft;
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerElement.innerText = "✓";
+          timerElement.style.borderColor = "#10b981";
+          
+          let finalBtn = document.getElementById('finalDownloadBtn');
+          finalBtn.style.display = 'block';
+          finalBtn.onclick = function() {
+            window.location.href = actualDownloadURL;
+          };
+        }
+      }, 1000);
+    }
+
+    function closeModal() {
+      document.getElementById('popupModal').style.display = 'none';
+      clearInterval(timerInterval);
+    }
+  </script>
 </body>
 </html>
